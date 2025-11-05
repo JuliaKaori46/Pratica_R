@@ -62,6 +62,7 @@ ggplot(df_final) +
 
 ggplot(df_final) +
   geom_boxplot(aes(x = factor(Ano), y = incidencia))
+<<<<<<< HEAD
 
 ##lendo DBC
 library(tidyverse)

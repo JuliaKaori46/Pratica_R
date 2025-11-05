@@ -125,3 +125,5 @@ right_join(dados, df_resumo_mis, by = c("type"))
 
 full_join(dados, df_resumo_mis, by = c("type"))
 inner_join(dados, df_resumo_mis, by = c("type"))
+
+
