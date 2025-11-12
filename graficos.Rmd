@@ -2,7 +2,8 @@
 title: "graficos"
 author: "Julia Kaori Kuriyama Ramos"
 date: "`r Sys.Date()`"
-output: html_document
+output:
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -15,15 +16,15 @@ library(tidyverse)
 
 
 ## GGPLOT
-
+#Exemplos de gráficos pelo pacote ggplot2 gerados pela disciplina "Ferramentas computacionais 2025"
 
 ```{r, echo=FALSE}
 library(rcartocolor)
-
+library(tidyverse)
 cores <- carto_pal(12,"Bold")
 scales::show_col(cores)
 
-dados <- read.csv("D:/OneDrive/1. Pós-graduação/2. Doutorado/9. Disciplinas/4. Ferramentas computacionais de modelagem/Pokemon_full.csv")
+dados <- read.csv("Pokemon_full.csv")
 
 summary(dados)
 ```
@@ -33,15 +34,14 @@ summary(dados)
 dados<-dados %>%
   mutate(
     classe_altura = case_when(
-      height < 5 ~ "Baixinho", 
+      height < 5 ~ "Baixo", 
       height < 50 ~ "Pequeno",
       height < 100 ~ "Médio",
-      TRUE ~ "Altão"
+      TRUE ~ "Alto"
     )
   ) %>%
   mutate(
-    classe_altura = factor(classe_altura, levels = c("Baixinho", "Pequeno", "Médio", "Altão"))
-  )
+    classe_altura = factor(classe_altura, levels = c("Baixo","Pequeno", "Médio", "Alto")))
 
   ggplot(dados, aes(x = classe_altura, y = weight, fill = classe_altura)) +
     geom_violin()+
@@ -133,12 +133,12 @@ df_media%>%
   mutate(
     valor2 = ifelse(Medida == "Altura", valor*fator, valor)
   )%>%
-  ggplot( aes(x = classe_altura, y = valor, fill = Tipo))+
+  ggplot( aes(x = classe_altura, y = valor2, fill = Tipo))+
   geom_col(position = position_dodge2())+
   labs(x = "Classe", y = "Valor", fill = "Medida")+
   #facet_wrap(.~classe_altura) +
   scale_y_continuous(
-    sec.axis = sec_axis(~./1, name = "Média da Altura")
+    sec.axis = sec_axis(~./fator, name = "Média da Altura")
   )+
   theme_bw()+
     theme(
